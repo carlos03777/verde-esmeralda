@@ -125,16 +125,18 @@ Crear una carpeta llamada screenshots en el repositorio y agregar imágenes del 
 
 Ejemplo:
 
+
+
 ## Capturas de pantalla
 
-![Captura 1](screenshots/1.png)
-![Captura 2](screenshots/2.png)
-![Captura 3](screenshots/3.png)
-![Captura 4](screenshots/4.png)
-![Captura 5](screenshots/5.png)
-![Captura 6](screenshots/6.png)
-![Captura 7](screenshots/7.png)
-![Captura 8](screenshots/8.png)
+![Captura 1](verdeEsmeralda/screenshots/1.png)
+![Captura 2](verdeEsmeralda/screenshots/2.png)
+![Captura 3](verdeEsmeralda/screenshots/3.png)
+![Captura 4](verdeEsmeralda/screenshots/4.png)
+![Captura 5](verdeEsmeralda/screenshots/5.png)
+![Captura 6](verdeEsmeralda/screenshots/6.png)
+![Captura 7](verdeEsmeralda/screenshots/7.png)
+![Captura 8](verdeEsmeralda/screenshots/8.png)
 
 ---
 
