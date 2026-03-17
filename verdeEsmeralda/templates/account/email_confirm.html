@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-sm border-0 p-4 text-center">
+
+        <h3 class="fw-bold mb-3">Confirmar tu correo</h3>
+
+        {% if confirmation %}
+
+          <p>
+            Estás a punto de confirmar el correo:
+          </p>
+
+          <p class="fw-semibold">
+            {{ confirmation.email_address.email }}
+          </p>
+
+          <p class="text-muted">
+            Haz clic en el botón para activar tu cuenta.
+          </p>
+
+          <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success w-100 mt-3">
+              Confirmar correo
+            </button>
+          </form>
+
+        {% else %}
+
+          <p class="text-danger">
+            Este enlace de confirmación no es válido o ya fue utilizado.
+          </p>
+
+          <a href="{% url 'account_login' %}" class="btn btn-success mt-3 w-100">
+            Ir al login
+          </a>
+
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

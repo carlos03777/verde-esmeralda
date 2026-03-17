@@ -1,0 +1,365 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+
+<section class="home-top-section">
+
+<div class="container">
+
+<div class="row g-4">
+
+<!-- CATEGORIAS -->
+
+<div class="col-lg-4 col-md-6">
+
+<div class="category-box">
+
+<h5 class="category-title">Categorías</h5>
+
+<ul class="category-list">
+
+{% for categoria in categorias %}
+
+<li>
+<a href="#">
+{{ categoria.nombre }}
+</a>
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- CARRUSEL -->
+
+<div class="col-lg-8 col-md-6">
+
+<div class="carousel-box">
+
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+
+<div class="carousel-inner">
+
+<div class="carousel-item active">
+
+<img src="{% static 'img/1.png' %}" class="d-block w-100">
+
+<div class="carousel-caption">
+<h2>Conecta con la naturaleza</h2>
+<p>Kokedamas hechas a mano</p>
+</div>
+
+</div>
+
+<div class="carousel-item">
+
+<img src="{% static 'img/1.png' %}" class="d-block w-100">
+
+<div class="carousel-caption">
+<h2>Transforma tu hogar</h2>
+<p>Plantas decorativas para interiores</p>
+</div>
+
+</div>
+
+<div class="carousel-item">
+
+<img src="{% static 'img/1.png' %}" class="d-block w-100">
+
+<div class="carousel-caption">
+<h2>Talleres botánicos</h2>
+<p>Aprende a crear tu propia kokedama</p>
+</div>
+
+</div>
+
+</div>
+
+<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+<span class="carousel-control-prev-icon"></span>
+</button>
+
+<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+<span class="carousel-control-next-icon"></span>
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCTOS MAS VENDIDOS -->
+
+<section class="best-sellers">
+
+<div class="container">
+
+<div class="section-header">
+
+<h3>Productos más vendidos</h3>
+<a href="" class="ver-mas">Ver más</a>
+
+</div>
+
+<div class="row g-4">
+
+{% for producto in productos_destacados %}
+
+<div class="col-6 col-md-3">
+
+<div class="product-card">
+
+<div class="product-img">
+
+<img src="{{ producto.imagenes.first.imagen.url }}">
+
+<a class="wishlist-btn " href="{% url 'agregar_a_wishlist' producto.id %}">
+<i class="bi bi-heart "></i>
+</a>
+
+</div>
+
+<div class="product-info">
+
+<h6>{{ producto.nombre }}</h6>
+
+<div class="product-price">
+
+{% if producto.descuento %}
+<span class="price-old">${{ producto.precio }}</span>
+<span class="price">${{ producto.descuento }}</span>
+{% else %}
+<span class="price">${{ producto.precio }}</span>
+{% endif %}
+
+</div>
+
+<a class="cart-btn" href="{% url 'agregar_al_carrito' producto.id %}">
+<i class="bi bi-cart"></i>
+Agregar
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BANNERS CATEGORIAS -->
+
+<section class="category-banners">
+
+<div class="container">
+
+<div class="row g-4">
+
+<div class="col-12 col-md-6 col-lg-4">
+
+<div class="banner-card">
+
+<img src="{% static 'img/3.png' %}">
+
+<div class="banner-content">
+<h4>Plantas de Interior</h4>
+<p>Transforma tu hogar con naturaleza viva.</p>
+<a href="#" class="banner-btn">Descubre más</a>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-12 col-md-6 col-lg-4">
+
+<div class="banner-card">
+
+<img src="{% static 'img/3.png' %}">
+
+<div class="banner-content">
+<h4>Kokedamas</h4>
+<p>Arte japonés hecho con plantas naturales.</p>
+<a href="#" class="banner-btn">Descubre más</a>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-12 col-md-6 col-lg-4">
+
+<div class="banner-card">
+
+<img src="{% static 'img/3.png' %}">
+
+<div class="banner-content">
+<h4>Suculentas</h4>
+<p>Pequeñas plantas con gran personalidad.</p>
+<a href="#" class="banner-btn">Descubre más</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCTOS -->
+
+<section class="home-products">
+
+<div class="container">
+
+<div class="section-header">
+
+<div>
+<h3>Nuestros productos</h3>
+<p class="section-legend">Descubre nuestras kokedamas y plantas de interior.</p>
+</div>
+
+<a href="" class="ver-mas">Ver más</a>
+
+</div>
+
+<div class="row g-4">
+
+{% for producto in productos %}
+
+<div class="col-6 col-md-3">
+
+<div class="product-card">
+
+<div class="product-img">
+
+<img src="{{ producto.imagenes.first.imagen.url }}">
+
+<a class="wishlist-btn " href="{% url 'agregar_a_wishlist' producto.id %}">
+<i class="bi bi-heart "></i>
+</a>
+
+</div>
+
+<div class="product-info">
+
+<h6>{{ producto.nombre }}</h6>
+
+<div class="product-price">
+
+{% if producto.descuento %}
+<span class="price-old">${{ producto.precio }}</span>
+<span class="price">${{ producto.descuento }}</span>
+{% else %}
+<span class="price">${{ producto.precio }}</span>
+{% endif %}
+
+</div>
+
+<a class="cart-btn" href="{% url 'agregar_al_carrito' producto.id %}">
+<i class="bi bi-cart"></i>
+Agregar
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+
+<!-- BLOG -->
+
+<section class="home-blog">
+
+<div class="container">
+
+<div class="section-header">
+
+<div>
+<h3>Entradas recientes</h3>
+<p class="section-legend">Consejos, ideas y experiencias para conectar con la naturaleza.</p>
+</div>
+
+<a href="" class="ver-mas">Ver más</a>
+
+</div>
+
+<div class="row g-4">
+
+{% for post in posts %}
+
+<div class="col-12 col-md-6 col-lg-4">
+
+<div class="blog-card">
+
+<div class="blog-img">
+
+<img src="{{ post.imagen.url }}">
+
+<div class="blog-date">
+<span>{{ post.creado|date:"d" }}</span>
+<small>{{ post.creado|date:"M" }}</small>
+</div>
+
+</div>
+
+<div class="blog-content">
+
+<h5>{{ post.titulo }}</h5>
+
+<p>{{ post.excerpt }}</p>
+
+<a href="#" class="blog-btn">Ver más</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+
+{% endblock %}

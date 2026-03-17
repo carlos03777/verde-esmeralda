@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva dirección{% endblock %}
+
+{% block content %}
+
+<div class="container py-5" style="max-width:600px">
+
+<h3 class="mb-4">Agregar dirección</h3>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+<label>Nombre</label>
+{{ form.nombre }}
+</div>
+
+<div class="mb-3">
+<label>Celular</label>
+{{ form.celular }}
+{{ form.celular.errors }}
+</div>
+
+<div class="mb-3">
+<label>Dirección</label>
+{{ form.direccion }}
+</div>
+
+<div class="mb-3">
+<label>Ciudad</label>
+{{ form.ciudad }}
+</div>
+
+<button class="btn btn-success w-100">
+Guardar dirección
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

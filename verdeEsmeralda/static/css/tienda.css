@@ -1,0 +1,147 @@
+/* PAGE HEADER */
+
+.page-header{
+    min-height: auto;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+
+
+/* SHOP */
+
+.shop{
+    margin-bottom:80px;
+}
+
+
+
+/* SIDEBAR */
+
+.shop-sidebar{
+    background:#f8f8f8;
+    padding:20px;
+    border-radius:8px;
+}
+
+.filter-box{
+    margin-bottom:25px;
+}
+
+.filter-box h6{
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+
+
+/* BOTON FILTRO */
+
+.btn-filter{
+    background:#1C935B;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    margin-top:10px;
+    border-radius:4px;
+}
+
+
+
+/* CATEGORIAS */
+
+.category-list{
+    list-style:none;
+    padding:0;
+}
+
+.category-list li{
+    margin-bottom:8px;
+}
+
+.category-list a{
+    text-decoration:none;
+    color:#333;
+}
+
+.category-list a:hover{
+    color:#1C935B;
+}
+
+
+
+/* TOP SHOP */
+
+.shop-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.shop-sort{
+    max-width:200px;
+}
+
+
+
+/* SIDEBAR WIDGET */
+
+.sidebar-widget{
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    margin-top:25px;
+}
+
+.widget-title{
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+
+
+/* MINI PRODUCT */
+
+.mini-product{
+    display:flex;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.mini-product img{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:6px;
+    margin-right:10px;
+}
+
+.mini-product-info p{
+    font-size:14px;
+    margin:0;
+}
+
+.mini-product-info span{
+    font-size:13px;
+    color:#1C935B;
+    font-weight:600;
+}
+
+
+
+/* RESPONSIVE */
+
+@media (max-width: 991px){
+
+    .shop-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+}
+
+
+

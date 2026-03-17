@@ -1,0 +1,391 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* ================= COLORES ================= */
+
+:root {
+
+    --verde-principal: #1C935B;
+    --verde-natural: #90BF49;
+    --verde-profundo: #25593B;
+
+    --cafe-tierra: #79431F;
+    --cafe-claro: #A67C52;
+
+}
+
+
+/* ================= DEGRADADO ================= */
+
+.bg-degradado {
+    background: linear-gradient(
+        90deg,
+        #90BF49,
+        #1C935B,
+        #25593B
+    );
+}
+
+
+/*===================Aqui comienza el header=============*/
+
+/* ================= TOP BAR ================= */
+
+.top-bar{
+    background:#f5f5f5;
+    font-size:13px;
+}
+
+.small-links a{
+    margin-right:15px;
+    text-decoration:none;
+    color:#555;
+}
+
+.small-links a:hover{
+    color:var(--verde-principal);
+}
+
+.social-icons a{
+    margin-left:12px;
+    color:var(--verde-principal);
+    font-size:16px;
+}
+
+
+
+/* ================= HEADER ================= */
+
+.logo{
+    height:75px;
+    width: auto;
+}
+
+
+
+/* ================= SEARCH ================= */
+
+.search-box{
+    display:flex;
+    align-items:center;
+    border:1px solid #ddd;
+    border-radius:6px;
+    overflow:hidden;
+    background:white;
+}
+
+.search-box:focus-within{
+    border-color:var(--verde-principal);
+}
+
+
+
+/* categorias */
+
+.category-select{
+
+    display:flex;
+    align-items:center;
+
+    border:1px solid var(--verde-principal);
+    border-radius:6px 0 0 6px;
+
+    padding:9px 12px;
+
+    font-size:14px;
+    font-weight:500;
+
+    background:white;
+    color:var(--verde-profundo);
+
+    min-width:140px;
+    max-width:180px;
+
+    cursor:pointer;
+
+    transition:all .2s ease;
+
+}
+
+/* hover */
+
+.category-select:hover{
+    border-color:var(--verde-profundo);
+    box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* focus */
+
+.category-select:focus{
+    outline:none;
+    border-color:var(--verde-profundo);
+    box-shadow:0 0 0 2px rgba(0,128,0,0.15);
+}
+
+/* input */
+
+.search-input{
+    border:none;
+    flex:1;
+    padding:8px 12px;
+    font-size:14px;
+}
+
+
+
+/* boton buscar */
+
+.btn-search{
+    background:var(--verde-principal);
+    color:white;
+    border:none;
+    padding:8px 14px;
+}
+
+
+
+/* ================= ICONOS HEADER ================= */
+
+.header-icons-a{
+    margin-left:18px;
+    text-decoration:none;
+    color:#333;
+    font-size:18px;
+}
+
+.header-icons a:hover{
+    color:var(--verde-principal);
+}
+
+
+
+/* ================= MENU ================= */
+
+.menu-bar{
+    border-top:1px solid #eee;
+}
+
+.menu-bar .nav-link{
+    color:#333;
+    font-weight:500;
+    padding:14px 18px;
+}
+
+.menu-bar .nav-link:hover{
+    color:var(--verde-principal);
+}
+
+/* BOTON MENU MOBILE */
+
+.menu-toggle{
+    border:none;
+    background:white;
+    font-size:28px;
+    padding:10px;
+    border-radius:6px;
+}
+
+.menu-toggle:focus{
+    box-shadow:none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+
+/* TABLET */
+
+@media (max-width:992px){
+
+.logo{
+    height:45px;
+}
+
+.header-icons a{
+    font-size:17px;
+}
+
+}
+
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+.top-bar{
+    font-size:12px;
+}
+
+.logo{
+    height:40px;
+}
+
+.header-icons a{
+    margin-left:12px;
+    font-size:18px;
+}
+
+.search-box{
+    margin-top:10px;
+}
+
+.category-select{
+    min-width:100px;
+}
+
+.menu-bar{
+    border-top:1px solid #eee;
+}
+
+}
+
+
+
+/* MOBILE PEQUEÑO */
+
+@media (max-width:480px){
+
+.search-input{
+    font-size:13px;
+}
+
+.btn-search{
+    padding:6px 10px;
+}
+
+.category-select{
+    min-width:90px;
+}
+
+}
+
+/*==============0 Aqui termina el header ==============*/
+
+
+/* ================= PERFIL MENU ================= */
+
+.list-group-item.active{
+    background: var(--verde-principal);
+    border-color: var(--verde-principal);
+    color: white;
+    font-weight:500;
+}
+
+.list-group-item.active:hover{
+    background: var(--verde-profundo);
+    border-color: var(--verde-profundo);
+}
+
+
+/* items normales */
+
+.list-group-item
+
+
+
+
+
+/*============= footer =========== */
+/* FOOTER */
+
+.main-footer{
+margin-top:80px;
+background:#25593B;
+color:white;
+padding:50px 0 0 0;
+}
+
+.footer-logo{
+height:55px;
+margin-bottom:15px;
+}
+
+.footer-text{
+font-size:14px;
+color:#d9e6df;
+}
+
+
+/* TITULOS */
+
+.footer-title{
+font-weight:600;
+margin-bottom:15px;
+}
+
+
+/* LINKS */
+
+.footer-links{
+list-style:none;
+padding:0;
+}
+
+.footer-links li{
+margin-bottom:8px;
+}
+
+.footer-links a{
+text-decoration:none;
+color:#d9e6df;
+font-size:14px;
+}
+
+.footer-links a:hover{
+color:white;
+}
+
+
+/* REDES */
+
+.footer-social a{
+margin-right:12px;
+color:white;
+font-size:18px;
+}
+
+
+/* NEWSLETTER */
+
+.newsletter{
+display:flex;
+border-radius:5px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.newsletter input{
+border:none;
+padding:10px;
+flex:1;
+}
+
+.newsletter button{
+border:none;
+background:#1C935B;
+color:white;
+padding:10px 15px;
+}
+
+
+/* COPYRIGHT */
+
+.footer-bottom{
+margin-top:40px;
+background:#1c4631;
+padding:15px 0;
+font-size:13px;
+color:#cfe3d9;
+}
+
+/*============= cierre footer =========== */
+
+
+
+
+
+
+
+
+

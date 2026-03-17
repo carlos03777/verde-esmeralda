@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 p-4 text-center">
+        <h4 class="fw-bold mb-3">¡Verifica tu correo!</h4>
+        <p>Hemos enviado un enlace de confirmación a <strong>{{ email }}</strong>.</p>
+        <p>Por favor revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.</p>
+        <p class="text-muted small">Si no lo ves, revisa la carpeta de spam.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

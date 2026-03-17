@@ -1,0 +1,478 @@
+
+
+
+
+
+
+
+
+
+/*=======hero ===========*/
+/* ================= HOME TOP SECTION ================= */
+
+.home-top-section{
+    margin-top:30px;
+}
+
+
+/* CATEGORIAS */
+
+.category-box{
+    background:white;
+    border-radius:8px;
+    padding:20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.category-title{
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.category-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+
+.category-list li{
+    margin-bottom:10px;
+}
+
+.category-list a{
+    text-decoration:none;
+    color:#333;
+    transition:0.3s;
+}
+
+.category-list a:hover{
+    color:var(--verde-principal);
+}
+
+
+/* CARRUSEL */
+
+.carousel-box{
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+/* IMAGENES */
+
+.carousel-item img{
+    height:350px;
+    object-fit:cover;
+}
+
+
+/* TEXTO SOBRE EL BANNER */
+
+.carousel-caption{
+    background:rgba(0,0,0,0.4);
+    padding:20px;
+    border-radius:6px;
+}
+
+
+/* RESPONSIVE HERO */
+
+@media (max-width:768px){
+
+.carousel-item img{
+    height:220px;
+}
+
+}
+
+@media (max-width:768px){
+
+.home-top-section{
+    margin-top:20px;
+}
+
+}
+/*=============termina el hero=========== */
+
+
+
+/* ================= BEST SELLERS ================= */
+
+.best-sellers{
+    margin-top:40px;
+}
+
+
+/* TITULO SECCION */
+
+.section-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-header h3{
+    font-weight:600;
+}
+
+.ver-mas{
+    text-decoration:none;
+    color:var(--verde-principal);
+    font-weight:500;
+}
+
+/* TARJETAS */
+
+.product-card{
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    transition:0.3s;
+    min-height: auto;
+}
+
+.product-card:hover{
+    transform:translateY(-4px);
+}
+
+
+
+/* IMAGEN */
+
+.product-img{
+    position:relative;
+}
+
+.product-img img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+
+
+.wishlist-btn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none; /* quita subrayado */
+    color: inherit; /* mantiene color del icono */
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.wishlist-btn i{
+    font-size: 16px;
+    color: #dc3545;
+}
+
+.wishlist-btn:hover{
+    background: #f8f9fa;
+    transform: scale(1.1);
+    transition: 0.2s;
+}
+
+
+/* INFO */
+
+.product-info{
+    padding:15px;
+}
+
+.product-info h6{
+    margin-bottom:10px;
+}
+
+
+
+/* PRECIOS */
+
+.product-price{
+    margin-bottom:10px;
+}
+
+.price-old{
+    text-decoration:line-through;
+    color:#888;
+    margin-right:8px;
+}
+
+.price{
+    color:var(--verde-principal);
+    font-weight:600;
+}
+
+
+
+/* BOTON CARRITO */
+
+.cart-btn{
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+
+width:100%;
+
+background:var(--verde-principal);
+color:white;
+
+padding:9px 12px;
+
+border:none;
+border-radius:6px;
+
+font-size:14px;
+font-weight:500;
+
+text-decoration:none;
+
+cursor:pointer;
+
+transition:all .2s ease;
+
+}
+
+/* icono */
+
+.cart-btn i{
+font-size:15px;
+}
+
+/* hover */
+
+.cart-btn:hover{
+
+background:var(--verde-profundo);
+color:white;
+
+transform:translateY(-1px);
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+
+text-decoration:none;
+
+}
+
+/* click */
+
+.cart-btn:active{
+transform:scale(0.97);
+}
+/*============  = cierre productos mas vendidos=========== */
+
+
+
+/*============= inicio categorias banner =========== */
+/* ===== CATEGORY BANNERS ===== */
+
+.category-banners{
+    margin-top:50px;
+}
+
+
+/* TARJETA */
+
+.banner-card{
+    position:relative;
+    overflow:hidden;
+    border-radius:10px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+}
+
+
+/* IMAGEN */
+
+.banner-card img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+
+
+/* CAPA OSCURA PARA LEER TEXTO */
+
+.banner-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.35);
+}
+
+
+/* CONTENIDO */
+
+.banner-content{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+    z-index:2;
+}
+
+
+.banner-content h4{
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+.banner-content p{
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+
+/* BOTON */
+
+.banner-btn{
+    background:white;
+    color:#2f6f4f;
+    padding:8px 18px;
+    border-radius:4px;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.banner-btn:hover{
+    background:#2f6f4f;
+    color:white;
+}
+
+/*============= cierre categorias banner=========== */
+
+
+/*============= inicio productos =========== */
+.home-products{
+margin-top:60px;
+}
+
+.section-legend{
+font-size:14px;
+color:#666;
+margin-top:5px;
+}
+
+/*============= cierre productos =========== */
+
+/*============= Inicio blog =========== */
+
+/* BLOG HOME */
+
+.home-blog{
+margin-top:70px;
+}
+
+
+/* TARJETA */
+
+.blog-card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.blog-card:hover{
+transform:translateY(-4px);
+}
+
+
+/* IMAGEN */
+
+.blog-img{
+position:relative;
+}
+
+.blog-img img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+
+/* FECHA */
+
+.blog-date{
+position:absolute;
+top:15px;
+right:15px;
+background:#1C935B;
+color:white;
+width:55px;
+height:55px;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+font-size:12px;
+font-weight:500;
+}
+
+.blog-date span{
+font-size:16px;
+font-weight:600;
+line-height:1;
+}
+
+
+/* CONTENIDO */
+
+.blog-content{
+padding:20px;
+}
+
+.blog-content h5{
+font-size:16px;
+font-weight:600;
+margin-bottom:10px;
+}
+
+.blog-content p{
+font-size:14px;
+color:#666;
+margin-bottom:15px;
+}
+
+
+/* BOTON */
+
+.blog-btn{
+text-decoration:none;
+color:#1C935B;
+font-weight:500;
+font-size:14px;
+}
+
+.blog-btn:hover{
+text-decoration:underline;
+}
+
+.blog-content p{
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+overflow:hidden;
+}
+
+/*============= cierre blog =========== */

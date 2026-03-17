@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+<div class="row">
+
+<!-- SIDEBAR -->
+<div class="col-lg-3 mb-4">
+
+<div class="card shadow-sm border-0">
+
+<div class="list-group list-group-flush">
+
+<a href="{% url 'perfil' %}?tab=perfil"
+class="list-group-item list-group-item-action {% if tab == 'perfil' %}active{% endif %}">
+<i class="bi bi-person-circle me-2"></i> Perfil
+</a>
+
+<a href="{% url 'perfil' %}?tab=ordenes"
+class="list-group-item list-group-item-action {% if tab == 'ordenes' %}active{% endif %}">
+<i class="bi bi-box-seam me-2"></i> Órdenes
+</a>
+
+<a href="{% url 'perfil' %}?tab=direcciones"
+class="list-group-item list-group-item-action {% if tab == 'direcciones' %}active{% endif %}">
+<i class="bi bi-geo-alt me-2"></i> Direcciones
+</a>
+
+<a href="{% url 'account_logout' %}?next=/"
+class="list-group-item list-group-item-action text-danger">
+<i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
+</a>
+
+</div>
+</div>
+
+</div>
+
+
+<!-- CONTENIDO DERECHO -->
+<div class="col-lg-9">
+
+
+<!-- ================= PERFIL ================= -->
+
+{% if tab == "perfil" %}
+
+<div class="card shadow-sm border-0 p-4">
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="row align-items-center">
+
+<div class="col-md-3 text-center mb-3">
+
+{% if profile.avatar %}
+
+<img src="{{ profile.avatar.url }}"
+class="rounded-circle mb-3 shadow-sm"
+width="120"
+height="120"
+style="object-fit:cover;">
+
+{% else %}
+
+<img src="https://ui-avatars.com/api/?name={{user.username}}&background=198754&color=fff&size=120"
+class="rounded-circle mb-3 shadow-sm">
+
+{% endif %}
+
+<input type="file" name="avatar" class="form-control form-control-sm">
+
+</div>
+
+<div class="col-md-9">
+
+<h4 class="mb-1">
+{{ user.get_full_name|default:user.username }}
+</h4>
+
+<p class="text-muted mb-3">
+{{ user.email }}
+</p>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="text-muted small">Nombre</label>
+<input
+type="text"
+name="first_name"
+class="form-control"
+value="{{ user.first_name }}">
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="text-muted small">Apellido</label>
+<input
+type="text"
+name="last_name"
+class="form-control"
+value="{{ user.last_name }}">
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="text-muted small">Celular</label>
+<input
+type="text"
+name="phone"
+class="form-control"
+value="{{ profile.celular }}">
+</div>
+
+</div>
+
+<button name="update_profile" class="btn btn-success mt-2">
+<i class="bi bi-check-lg me-2"></i>
+Guardar cambios
+</button>
+
+</div>
+</div>
+
+</form>
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ================= ORDENES ================= -->
+
+{% if tab == "ordenes" %}
+
+<div class="card shadow-sm border-0 p-4">
+
+<h5 class="mb-3">
+<i class="bi bi-bag-check me-2"></i>
+Tus órdenes
+</h5>
+
+{% if ordenes %}
+
+<div class="table-responsive">
+
+<table class="table align-middle">
+
+<thead class="table-light">
+<tr>
+<th># Orden</th>
+<th>Total</th>
+<th>Estado</th>
+<th>Fecha</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for orden in ordenes %}
+
+<tr>
+
+<td>
+<strong>#{{ orden.id }}</strong>
+</td>
+
+<td>
+${{ orden.total }}
+</td>
+
+<td>
+
+{% if orden.estado == "pending" %}
+<span class="badge bg-warning text-dark">Pendiente</span>
+
+{% elif orden.estado == "paid" %}
+<span class="badge bg-primary">Pagado</span>
+
+{% elif orden.estado == "shipped" %}
+<span class="badge bg-info text-dark">Enviado</span>
+
+{% elif orden.estado == "completed" %}
+<span class="badge bg-success">Completado</span>
+
+{% elif orden.estado == "cancelled" %}
+<span class="badge bg-danger">Cancelado</span>
+
+{% endif %}
+
+</td>
+
+<td>
+{{ orden.creado|date:"d M Y" }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% else %}
+
+<div class="text-center py-4">
+
+<p class="text-muted mb-3">
+Aún no tienes órdenes.
+</p>
+
+<a href="/" class="btn btn-outline-success">
+<i class="bi bi-bag me-2"></i>
+Ir a la tienda
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endif %}
+
+
+
+<!-- ================= DIRECCIONES ================= -->
+
+{% if tab == "direcciones" %}
+
+<div class="card shadow-sm border-0 p-4">
+
+<h5 class="mb-3">
+<i class="bi bi-geo-alt me-2"></i>
+Tus direcciones
+</h5>
+
+
+{% if direcciones %}
+
+<div class="row">
+
+{% for direccion in direcciones %}
+
+<div class="col-md-6 mb-3">
+
+<div class="card p-3 h-100">
+
+<strong>{{ direccion.nombre }}</strong>
+
+<p class="mb-1">
+{{ direccion.direccion }}
+</p>
+
+<p class="mb-1">
+{{ direccion.ciudad }}, {{ direccion.departamento }}
+</p>
+
+<p class="mb-1">
+CP: {{ direccion.codigoPostal }}
+</p>
+
+<p class="mb-2">
+📱 {{ direccion.celular }}
+</p>
+
+<div class="d-flex gap-2">
+
+<a href="?tab=direcciones&editar={{ direccion.id }}"
+class="btn btn-sm btn-outline-primary">
+Editar
+</a>
+
+<form method="POST">
+{% csrf_token %}
+
+<input type="hidden" name="direccion_id" value="{{ direccion.id }}">
+
+<button
+name="delete_address"
+class="btn btn-sm btn-outline-danger"
+onclick="return confirm('¿Eliminar dirección?')">
+
+Eliminar
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<p class="text-muted">No tienes direcciones guardadas</p>
+
+{% endif %}
+
+
+<hr class="my-4">
+
+
+<h6 class="mb-3">
+
+{% if direccion_edit %}
+Editar dirección
+{% else %}
+Agregar nueva dirección
+{% endif %}
+
+</h6>
+
+
+<form method="POST">
+{% csrf_token %}
+
+{% if next_url %}
+<input type="hidden" name="next" value="{{ next_url }}">
+{% endif %}
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Nombre</label>
+{{ direccion_form.nombre }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Celular</label>
+{{ direccion_form.celular }}
+</div>
+
+<div class="col-md-12 mb-3">
+<label class="form-label">Dirección</label>
+{{ direccion_form.direccion }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Ciudad</label>
+{{ direccion_form.ciudad }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Departamento</label>
+{{ direccion_form.departamento }}
+</div>
+
+<div class="col-md-6 mb-3">
+<label class="form-label">Código Postal</label>
+{{ direccion_form.codigoPostal }}
+</div>
+
+</div>
+
+<button name="save_address" class="btn btn-success">
+
+{% if direccion_edit %}
+Actualizar dirección
+{% else %}
+Guardar dirección
+{% endif %}
+
+</button>
+
+</form>
+</div>
+
+{% endif %}
+
+
+</div>
+</div>
+</div>
+
+{% endblock %}

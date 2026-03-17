@@ -1,0 +1,160 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tienda{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/tienda.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+<div class="container text-center">
+
+<nav class="breadcrumb-nav">
+<a href="{% url 'tienda' %}">Inicio</a>
+<span>/</span>
+<span class="active">Tienda</span>
+</nav>
+
+<h1 class="page-title">Nuestra Tienda</h1>
+
+</div>
+</section>
+
+
+<!-- TIENDA -->
+<section class="shop">
+<div class="container">
+<div class="row g-4">
+
+<!-- ================= SIDEBAR ================= -->
+<div class="col-lg-3">
+
+<!-- BUSCAR -->
+<div class="sidebar-widget">
+<h6 class="widget-title">Buscar</h6>
+
+<form method="GET">
+<input type="text" name="q" value="{{ request.GET.q }}" class="form-control" placeholder="Buscar plantas...">
+</form>
+
+</div>
+
+<!-- CATEGORIAS -->
+<div class="sidebar-widget d-none d-md-block">
+
+<h6 class="widget-title">Categorías</h6>
+
+<ul class="category-list">
+
+{% for categoria in categorias %}
+<li>
+<a href="?categoria={{ categoria.slug }}">
+{{ categoria.nombre }}
+</a>
+</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- ================= PRODUCTOS ================= -->
+<div class="col-lg-9">
+
+<div class="shop-top d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+<p>
+Mostrando {{ productos|length }} productos
+</p>
+
+</div>
+
+
+<div class="row g-4">
+
+{% for producto in productos %}
+
+<div class="col-6 col-md-4 col-lg-3">
+
+<div class="product-card">
+
+<!-- IMAGEN -->
+<div class="product-img position-relative">
+
+{% with imagen=producto.imagenes.first %}
+    {% if imagen %}
+        <img src="{{ imagen.imagen.url }}">
+    {% endif %}
+{% endwith %}
+
+<!-- WISHLIST -->
+<a class="wishlist-btn" href="{% url 'agregar_a_wishlist' producto.id %}">
+<i class="bi bi-heart"></i>
+</a>
+
+</div>
+
+<!-- INFO -->
+<div class="product-info">
+
+<h6>{{ producto.nombre }}</h6>
+
+<!-- PRECIO -->
+<div class="product-price">
+
+{% if producto.descuento %}
+    <span class="price-old">
+        ${{ producto.precio|floatformat:0 }}
+    </span>
+{% endif %}
+
+<span class="price">
+    ${{ producto.precio_final|floatformat:0 }}
+</span>
+
+</div>
+
+<!-- BOTÓN -->
+{% if producto.stock > 0 %}
+<a href="{% url 'agregar_al_carrito' producto.id %}" class="cart-btn">
+    <i class="bi bi-cart"></i> Agregar
+</a>
+{% else %}
+<button class="cart-btn" disabled>
+    Agotado
+</button>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12 text-center py-5">
+<p>No se encontraron productos</p>
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</div>
+</div>
+</section>
+
+{% endblock %}

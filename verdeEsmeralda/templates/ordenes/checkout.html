@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<h2 class="mb-4">Checkout</h2>
+
+<div class="row g-4">
+
+<!-- ===================== -->
+<!-- PRODUCTOS -->
+<!-- ===================== -->
+
+<div class="col-lg-8">
+
+<h4 class="mb-3">Productos</h4>
+
+<div class="table-responsive">
+
+<table class="table align-middle">
+
+<thead>
+<tr>
+<th>Producto</th>
+<th>Cantidad</th>
+<th>Subtotal</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in items %}
+
+<tr>
+
+<td>
+<div class="d-flex align-items-center gap-3">
+
+    {% with imagen=item.producto.imagenes.first %}
+        {% if imagen %}
+            <img src="{{ imagen.imagen.url }}" 
+                 alt="{{ item.producto.nombre }}" 
+                 style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
+        {% else %}
+            <div style="width:60px; height:60px; background:#eee; border-radius:8px;"></div>
+        {% endif %}
+    {% endwith %}
+
+    <div>
+        <strong>{{ item.producto.nombre }}</strong>
+
+        <div class="small text-muted">
+            {% if item.producto.descuento %}
+                <span class="text-decoration-line-through">
+                    ${{ item.producto.precio|floatformat:0 }}
+                </span>
+            {% endif %}
+            ${{ item.producto.precio_final|floatformat:0 }}
+        </div>
+    </div>
+
+</div>
+</td>
+
+<td>
+{{ item.quantity }}
+</td>
+
+<td>
+<strong>${{ item.subtotal|floatformat:0 }}</strong>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- ===================== -->
+<!-- RESUMEN -->
+<!-- ===================== -->
+
+<div class="col-lg-4">
+
+<div class="card p-3 shadow-sm">
+
+<h4>Total</h4>
+
+<h3 class="text-success mb-3">
+${{ total|floatformat:0 }}
+</h3>
+
+<hr>
+
+<h5>Dirección de envío</h5>
+
+{% if direcciones %}
+
+<form method="POST" action="{% url 'crear_orden' %}">
+{% csrf_token %}
+
+<select name="direccion" class="form-select mb-3">
+
+{% for direccion in direcciones %}
+
+<option value="{{ direccion.id }}">
+{{ direccion.nombre }} — {{ direccion.direccion }} ({{ direccion.ciudad }})
+</option>
+
+{% endfor %}
+
+</select>
+
+<button type="submit" class="btn btn-success w-100">
+Realizar pedido
+</button>
+
+</form>
+
+<a href="{% url 'perfil' %}?tab=direcciones&next={{ request.path }}" class="btn btn-outline-secondary w-100 mt-3">
+Agregar nueva dirección
+</a>
+
+{% else %}
+
+<div class="alert alert-warning">
+No tienes direcciones guardadas
+</div>
+
+<a href="{% url 'perfil' %}?tab=direcciones&next={{ request.path }}" class="btn btn-warning w-100 mb-3">
+Agregar dirección de envío
+</a>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
