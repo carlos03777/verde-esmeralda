@@ -41,14 +41,14 @@ Verde Esmeralda es una aplicación web tipo ecommerce que permite a los usuarios
 ## Estructura del proyecto
 
     verdeEsmeralda/
-    │
-    ├── productos/        # Catálogo de productos
-    ├── carrito/          # Lógica del carrito
-    ├── listaDeseos/      # Lista de deseos (wishlist)
-    ├── usuarios/         # Autenticación y perfiles
-    ├── templates/        # Plantillas HTML
-    ├── static/           # Archivos estáticos (CSS, JS, imágenes)
-    ├── manage.py
+     ordenes/          #compras
+     productos/        # Catálogo de productos
+     carrito/          # Lógica del carrito
+     listaDeseos/      # Lista de deseos (wishlist)
+     usuarios/         # Autenticación y perfiles
+     templates/        # Plantillas HTML
+     static/           # Archivos estáticos (CSS, JS, imágenes)
+     manage.py
 
 ---
 
@@ -56,7 +56,7 @@ Verde Esmeralda es una aplicación web tipo ecommerce que permite a los usuarios
 
 1. Clonar el repositorio:
 
-    git clone https://github.com/TU-USUARIO/verde-esmeralda.git
+    git clone https://github.com/carlos03777/verde-esmeralda.git
     cd verde-esmeralda
 
 2. Crear entorno virtual:
@@ -96,16 +96,10 @@ Verde Esmeralda es una aplicación web tipo ecommerce que permite a los usuarios
 ---
 
 ## Requerimientos
+1. Instalar requerimientos
+    pip freeze install -r  requirements.txt
 
-Si no tienes el archivo requirements.txt, puedes generarlo con:
 
-    pip freeze > requirements.txt
-
-Dependencias principales:
-
-    Django>=4.2
-    Pillow
-    django-allauth
 
 ---
 
@@ -119,6 +113,9 @@ Permite guardar productos y moverlos directamente al carrito.
 
 ### Checkout
 El usuario puede seleccionar una dirección de envío previamente guardada y generar una orden.
+
+### Logica de usuarios
+El usuario se puede autenticar, editar perfil, recuperar contraseña, validar la cuenta
 
 ---
 
