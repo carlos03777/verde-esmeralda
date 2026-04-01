@@ -32,10 +32,20 @@
             </h1>
 
             <!-- META -->
-            <div class="d-flex align-items-center gap-3 text-muted small mb-3">
-                <span>📅 {{ post.creado|date:"d M Y" }}</span>
-                <span>👁 {{ post.visitas }}</span>
-            </div>
+            <!-- META -->
+<div class="d-flex align-items-center gap-3 text-muted small mb-3">
+
+    <span class="d-flex align-items-center gap-1">
+        <i class="bi bi-calendar3"></i>
+        {{ post.creado|date:"d M Y" }}
+    </span>
+
+    <span class="d-flex align-items-center gap-1">
+        <i class="bi bi-eye"></i>
+        {{ post.visitas }}
+    </span>
+
+</div>
 
             <!--  LIKE MINIMAL -->
             <button id="like-btn" 
