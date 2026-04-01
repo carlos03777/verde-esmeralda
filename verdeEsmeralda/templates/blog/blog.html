@@ -116,19 +116,73 @@
                     </p>
 
                     <!-- FOOTER -->
-                    <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
+                  <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap gap-2">
 
-                        <div class="small text-muted">
-                            👁 {{ post.visitas }}  
-                            ❤️ {{ post.likes.count }}
-                        </div>
+    <!-- MÉTRICAS -->
+    <div class="small text-muted d-flex align-items-center gap-3">
 
-                        <a href="{% url 'post_detalle' post.slug %}" 
-                           class="btn btn-sm btn-outline-success">
-                            Leer más →
-                        </a>
+        <span class="d-flex align-items-center gap-1">
+            <i class="bi bi-eye"></i>
+            {{ post.visitas }}
+        </span>
 
-                    </div>
+        <span class="d-flex align-items-center gap-1">
+            <i class="bi bi-heart"></i>
+            {{ post.likes.count }}
+        </span>
+
+    </div>
+
+    <!-- ACCIONES -->
+    <div class="d-flex align-items-center gap-2">
+
+        <!-- COMPARTIR -->
+        <div class="dropdown">
+
+            {% with post_url=request.scheme|add:"://"|add:request.get_host|add:post.get_absolute_url %}
+
+            <a class="text-muted" role="button" data-bs-toggle="dropdown">
+                <i class="bi bi-share"></i>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+
+                <li>
+                    <a class="dropdown-item" target="_blank"
+                       href="https://wa.me/?text=Te%20comparto%20este%20artículo%20🌿%20{{ post_url }}">
+                        <i class="bi bi-whatsapp me-2"></i> WhatsApp
+                    </a>
+                </li>
+
+                <li>
+                    <a class="dropdown-item" target="_blank"
+                       href="https://www.facebook.com/sharer/sharer.php?u={{ post_url }}">
+                        <i class="bi bi-facebook me-2"></i> Facebook
+                    </a>
+                </li>
+
+                <li>
+                    <button class="dropdown-item copiar-link"
+                            data-url="{{ post_url }}">
+                        <i class="bi bi-link-45deg me-2"></i> Copiar enlace
+                    </button>
+                </li>
+
+            </ul>
+
+            {% endwith %}
+
+        </div>
+
+        <!-- BOTÓN -->
+        <a href="{% url 'post_detalle' post.slug %}" 
+           class="btn btn-sm btn-outline-success">
+            Leer más
+        </a>
+
+    </div>
+
+</div>
 
                 </div>
 
@@ -150,7 +204,7 @@
         <h4 class="mt-3">No hay entradas aún</h4>
 
         <p class="text-muted">
-            Pronto encontrarás contenido interesante aquí 🌱
+            Pronto encontrarás contenido interesante aquí 
         </p>
 
         <a href="/" class="btn btn-verde mt-2">
