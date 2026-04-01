@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-85%u$(k#ds9j%*51**9s@y$a1(t2un%x8taflzwf9bfyl#qcdw
 # Aplicaciones instaladas
 # ------------------------------------------------------------
 INSTALLED_APPS = [
+
+    "jazzmin",
     # Apps Django por defecto
     'django.contrib.admin',
     'django.contrib.auth',
@@ -144,8 +146,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # ------------------------------------------------------------
 # Internacionalización
 # ------------------------------------------------------------
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'es-co'
+TIME_ZONE = 'America/Bogota'
 USE_I18N = True
 USE_TZ = True
 
@@ -245,3 +247,89 @@ DEBUG = True
 if DEBUG:
     RECAPTCHA_PUBLIC_KEY = "test"
     RECAPTCHA_PRIVATE_KEY = "test"
+
+JAZZMIN_SETTINGS = {
+
+    # =========================
+    # 🏷️ IDENTIDAD
+    # =========================
+    "site_title": "Admin Verde Esmeralda",
+    "site_header": "Verde Esmeralda",
+    "site_brand": "Panel Administrativo",
+    "site_logo": "img/logo200x200.png",
+    "login_logo": "img/logo200x200.png",
+
+    "welcome_sign": "Panel de gestión 🌿",
+    "copyright": "Verde Esmeralda",
+
+    # =========================
+    # 📂 MENÚ ORDENADO (CLAVE)
+    # =========================
+    "order_with_respect_to": [
+        "core",
+        "productos",
+        "ordenes",
+        "usuarios",
+        "blog",
+    ],
+
+    # =========================
+    # 📁 AGRUPACIÓN REAL (PRO)
+    # =========================
+    "custom_links": {
+        "core": [
+            {
+                "name": "Ver sitio",
+                "url": "/",
+                "icon": "fas fa-globe",
+            },
+        ]
+    },
+
+    # =========================
+    # 🎯 ICONOS
+    # =========================
+    "icons": {
+        "core": "fas fa-leaf",
+
+        "core.Nosotros": "fas fa-seedling",
+        "core.Equipo": "fas fa-users",
+        "core.ConfiguracionSitio": "fas fa-cogs",
+        "core.Contacto": "fas fa-envelope",
+        "core.MensajeContacto": "fas fa-inbox",
+        "core.Taller": "fas fa-spa",
+        "core.Inscripcion": "fas fa-user-check",
+
+        "productos.Producto": "fas fa-box-open",
+        "productos.Categoria": "fas fa-tags",
+
+        "ordenes.Pedido": "fas fa-shopping-cart",
+
+        "usuarios.Profile": "fas fa-user",
+
+        "blog.Post": "fas fa-blog",
+        "blog.Categoria": "fas fa-folder",
+    },
+
+ 
+
+    # =========================
+    # 🎨 ESTILO PROPIO (CLAVE)
+    # =========================
+    "custom_css": "css/admin.css",
+
+    # =========================
+    # 🧾 FORMULARIOS PRO
+    # =========================
+    "changeform_format": "horizontal_tabs",
+    "changeform_format_overrides": {
+        "core.Nosotros": "horizontal_tabs",
+        "core.Taller": "horizontal_tabs",
+        "core.ConfiguracionSitio": "horizontal_tabs",
+    },
+
+    # =========================
+    # ❌ DESACTIVADO (IMPORTANTE)
+    # =========================
+    "show_ui_builder": False,
+}

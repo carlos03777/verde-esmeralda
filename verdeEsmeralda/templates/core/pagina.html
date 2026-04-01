@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ pagina.titulo }}{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="page-header">
+    <div class="container text-center">
+
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'home' %}">Inicio</a>
+            <span>/</span>
+            <span class="active">{{ pagina.titulo }}</span>
+        </nav>
+
+        <h1 class="page-title">{{ pagina.titulo }}</h1>
+
+    </div>
+</section>
+
+
+
+
+<!-- CONTENIDO -->
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="legal-content">
+
+                {{ pagina.contenido|safe }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+.page-header {
+    background: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+.breadcrumb-nav {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb-nav a {
+    color: #198754;
+    text-decoration: none;
+}
+
+
+/* CONTENIDO */
+.legal-content {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #555;
+}
+
+/* TITULOS */
+.legal-content h2,
+.legal-content h3 {
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+/* LISTAS */
+.legal-content ul {
+    padding-left: 20px;
+}
+
+</style>
+
+{% endblock %}

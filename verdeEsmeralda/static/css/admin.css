@@ -1,0 +1,58 @@
+/* ========================= */
+/*  COLORES VERDE ESMERALDA */
+/* ========================= */
+
+:root {
+    --verde-principal: #1C935B;
+    --verde-natural: #90BF49;
+    --verde-profundo: #25593B;
+}
+
+/* HEADER */
+.main-header {
+    background-color: var(--verde-principal) !important;
+}
+
+/* SIDEBAR */
+.main-sidebar {
+    background-color: var(--verde-profundo) !important;
+}
+
+/* LINKS SIDEBAR */
+.nav-sidebar .nav-link.active {
+    background-color: var(--verde-principal) !important;
+}
+
+.nav-sidebar .nav-link:hover {
+    background-color: var(--verde-natural) !important;
+    color: white !important;
+}
+
+/* BOTONES */
+.btn-success {
+    background-color: var(--verde-principal) !important;
+    border-color: var(--verde-principal) !important;
+}
+
+.btn-success:hover {
+    background-color: var(--verde-profundo) !important;
+}
+
+/* BADGES */
+.badge-success {
+    background-color: var(--verde-natural) !important;
+}
+
+/* TITULOS */
+.content-header h1 {
+    color: var(--verde-profundo);
+}
+
+/* LINKS */
+a {
+    color: var(--verde-principal);
+}
+
+a:hover {
+    color: var(--verde-profundo);
+}

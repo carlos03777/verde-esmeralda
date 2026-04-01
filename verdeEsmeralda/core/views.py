@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # 📦 Apps
 from productos.models import Producto, Categoria
 from blog.models import Post
-from .models import Nosotros, Equipo, Contacto, MensajeContacto, Taller, Inscripcion
+from .models import Nosotros, Equipo, Contacto, MensajeContacto, Taller, Inscripcion,  PaginaLegal
 
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -23,11 +23,14 @@ def home_view(request):
 
     posts = Post.objects.filter(publicado=True).order_by("-creado")[:6]
 
+    talleres = Taller.objects.filter(activo=True).order_by("fecha")[:3]
+
     context = {
         "categorias": categorias,
         "productos_destacados": productos_destacados,
         "productos": productos,
         "posts": posts,
+        "talleres": talleres
     }
 
     return render(request, "core/home.html", context)
@@ -182,4 +185,17 @@ def taller_detalle(request, slug):
 
     return render(request, "core/taller_detalle.html", {
         "taller": taller
+    })
+
+
+
+
+
+
+def pagina_legal(request, tipo):
+
+    pagina = get_object_or_404(PaginaLegal, tipo=tipo)
+
+    return render(request, "core/pagina.html", {
+        "pagina": pagina
     })

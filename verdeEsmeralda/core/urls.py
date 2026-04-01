@@ -10,4 +10,6 @@ urlpatterns = [
 
     path("taller/<slug:slug>/", views.taller_detalle, name="taller_detalle"),
 
+    path("legal/<str:tipo>/", views.pagina_legal, name="pagina_legal"),
+
 ]

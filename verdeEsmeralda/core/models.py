@@ -164,3 +164,23 @@ class Inscripcion(models.Model):
 
     def __str__(self):
         return f"{self.nombre} - {self.taller.titulo}"
+    
+
+
+class PaginaLegal(models.Model):
+
+    TIPOS = (
+        ("terminos", "Términos y condiciones"),
+        ("privacidad", "Políticas de privacidad"),
+    )
+
+    tipo = models.CharField(max_length=20, choices=TIPOS, unique=True)
+
+    titulo = models.CharField(max_length=200)
+
+    contenido = models.TextField()
+
+    actualizado = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.titulo
