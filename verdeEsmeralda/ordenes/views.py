@@ -5,9 +5,7 @@ from django.urls import reverse
 from django.db import transaction
 
 from productos.models import Producto
-from usuarios.models import Profile
-from carrito.models import Carrito, CarritoItem
-
+from carrito.models import Carrito
 from .models import Orden, OrdenItem, Direccion
 from .forms import DireccionForm
 
@@ -22,11 +20,14 @@ def checkout(request):
     carrito = get_object_or_404(Carrito, usuario=request.user)
     items_carrito = carrito.carritoitem_set.select_related("producto")
 
+    if not items_carrito.exists():
+        messages.warning(request, "Tu carrito está vacío")
+        return redirect("ver_carrito")
+
     items = []
     total = 0
 
     for item in items_carrito:
-
         subtotal = item.subtotal
         total += subtotal
 
@@ -48,7 +49,7 @@ def checkout(request):
 
 
 # ======================================
-# CREAR ORDEN
+# CREAR / REUTILIZAR ORDEN
 # ======================================
 
 @login_required
@@ -78,12 +79,9 @@ def crear_orden(request):
 
     total = 0
 
-    # ======================================
-    # TRANSACCIÓN SEGURA
-    # ======================================
-
     with transaction.atomic():
 
+        # 🔒 bloquear productos
         productos_ids = [item.producto.id for item in items_carrito]
 
         productos = Producto.objects.select_for_update().filter(
@@ -93,19 +91,17 @@ def crear_orden(request):
         productos_dict = {p.id: p for p in productos}
 
         # ======================================
-        # VALIDAR STOCK Y CALCULAR TOTAL
+        # VALIDAR STOCK
         # ======================================
-
         for item in items_carrito:
 
             producto = productos_dict.get(item.producto.id)
-            cantidad = item.quantity
 
             if not producto:
                 messages.error(request, "Producto no encontrado")
                 return redirect("ver_carrito")
 
-            if producto.stock < cantidad:
+            if producto.stock < item.quantity:
                 messages.error(
                     request,
                     f"No hay suficiente stock de {producto.nombre}"
@@ -115,19 +111,34 @@ def crear_orden(request):
             total += item.subtotal
 
         # ======================================
-        # CREAR ORDEN
+        # 🔥 REUTILIZAR ORDEN PENDIENTE
         # ======================================
-
-        orden = Orden.objects.create(
+        orden = Orden.objects.filter(
             user=request.user,
-            direccion=direccion,
-            total=total
-        )
+            estado="pending"
+        ).first()
+
+        if orden:
+            # 👉 actualizar dirección y total
+            orden.direccion = direccion
+            orden.total = total
+            orden.save()
+
+            # 👉 eliminar items anteriores
+            orden.ordenitem_set.all().delete()
+
+        else:
+            # 👉 crear nueva
+            orden = Orden.objects.create(
+                user=request.user,
+                direccion=direccion,
+                total=total,
+                estado="pending"
+            )
 
         # ======================================
-        # CREAR ITEMS
+        # CREAR ITEMS NUEVOS
         # ======================================
-
         items_orden = []
 
         for item in items_carrito:
@@ -143,57 +154,39 @@ def crear_orden(request):
                 )
             )
 
-            # descontar inventario
-            producto.stock -= item.quantity
-            producto.save()
-
         OrdenItem.objects.bulk_create(items_orden)
 
-        # ======================================
-        # VACIAR CARRITO
-        # ======================================
+        # ❗ NO vaciar carrito aún
+        # ❗ NO descontar stock aquí
 
-        items_carrito.delete()
+    messages.success(request, "Orden lista. Procede al pago.")
 
-    messages.success(request, "Orden creada correctamente")
-
-    return redirect(reverse("perfil") + "?tab=ordenes")
+    return redirect("iniciar_pago", orden_id=orden.id)
 
 
 # ======================================
-# CREAR DIRECCION
+# DIRECCIONES
 # ======================================
 
 @login_required
 def crear_direccion(request):
 
     if request.method == "POST":
-
         form = DireccionForm(request.POST)
 
         if form.is_valid():
-
             direccion = form.save(commit=False)
             direccion.usuario = request.user
             direccion.save()
 
             messages.success(request, "Dirección agregada correctamente")
-
             return redirect(reverse("perfil") + "?tab=direcciones")
 
     else:
         form = DireccionForm()
 
-    return render(
-        request,
-        "ordenes/direccion_form.html",
-        {"form": form}
-    )
+    return render(request, "ordenes/direccion_form.html", {"form": form})
 
-
-# ======================================
-# EDITAR DIRECCION
-# ======================================
 
 @login_required
 def editar_direccion(request, id):
@@ -205,33 +198,18 @@ def editar_direccion(request, id):
     )
 
     if request.method == "POST":
-
-        form = DireccionForm(
-            request.POST,
-            instance=direccion
-        )
+        form = DireccionForm(request.POST, instance=direccion)
 
         if form.is_valid():
-
             form.save()
-
             messages.success(request, "Dirección actualizada")
-
             return redirect(reverse("perfil") + "?tab=direcciones")
 
     else:
         form = DireccionForm(instance=direccion)
 
-    return render(
-        request,
-        "ordenes/direccion_form.html",
-        {"form": form}
-    )
+    return render(request, "ordenes/direccion_form.html", {"form": form})
 
-
-# ======================================
-# ELIMINAR DIRECCION
-# ======================================
 
 @login_required
 def eliminar_direccion(request, id):
@@ -243,9 +221,7 @@ def eliminar_direccion(request, id):
     )
 
     if request.method == "POST":
-
         direccion.delete()
-
         messages.success(request, "Dirección eliminada")
 
     return redirect(reverse("perfil") + "?tab=direcciones")

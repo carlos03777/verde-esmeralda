@@ -17,6 +17,8 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('pagos/', include('pagos.urls')),
     path('listaDeseos/', include('listaDeseos.urls')),
+
+    path("ckeditor/", include("ckeditor_uploader.urls")),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -91,14 +91,18 @@ Mostrando {{ productos|length }} productos
 <!-- IMAGEN -->
 <div class="product-img position-relative">
 
+<a href="{% url 'detalle_producto' producto.slug %}">
 {% with imagen=producto.imagenes.first %}
     {% if imagen %}
         <img src="{{ imagen.imagen.url }}">
+    {% else %}
+        <img src="{% static 'img/default.png' %}">
     {% endif %}
 {% endwith %}
+</a>
 
 <!-- WISHLIST -->
-<a class="wishlist-btn" href="{% url 'agregar_a_wishlist' producto.id %}">
+<a class="wishlist-btn"     >
 <i class="bi bi-heart"></i>
 </a>
 
@@ -107,7 +111,9 @@ Mostrando {{ productos|length }} productos
 <!-- INFO -->
 <div class="product-info">
 
-<h6>{{ producto.nombre }}</h6>
+<a href="{% url 'detalle_producto' producto.slug %}" class="text-decoration-none text-dark">
+    <h6>{{ producto.nombre }}</h6>
+</a>
 
 <!-- PRECIO -->
 <div class="product-price">
@@ -126,9 +132,12 @@ Mostrando {{ productos|length }} productos
 
 <!-- BOTÓN -->
 {% if producto.stock > 0 %}
-<a href="{% url 'agregar_al_carrito' producto.id %}" class="cart-btn">
-    <i class="bi bi-cart"></i> Agregar
-</a>
+<form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
+    {% csrf_token %}
+    <button type="submit" class="cart-btn">
+        <i class="bi bi-cart"></i> Agregar
+    </button>
+</form>
 {% else %}
 <button class="cart-btn" disabled>
     Agotado

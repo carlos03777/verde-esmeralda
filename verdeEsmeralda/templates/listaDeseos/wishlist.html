@@ -6,7 +6,7 @@
 
 <div class="container py-5">
 
-<h2 class="mb-4">❤️ Tu lista de deseos</h2>
+<h2 class="mb-4">Tu lista de deseos</h2>
 
 {% if items %}
 
@@ -19,45 +19,52 @@
     <!-- IZQUIERDA: IMAGEN + NOMBRE -->
     <div class="d-flex align-items-center gap-3">
 
-        {% with imagen=item.producto.imagenes.first %}
-            {% if imagen %}
-                <img src="{{ imagen.imagen.url }}" 
-                     style="width:80px; height:80px; object-fit:cover; border-radius:10px;">
-            {% else %}
-                <div style="width:80px; height:80px; background:#eee; border-radius:10px;"></div>
-            {% endif %}
-        {% endwith %}
+        <!-- 🔥 LINK AL DETALLE -->
+        <a href="{% url 'detalle_producto' item.producto.slug %}" class="d-flex align-items-center gap-3 text-decoration-none text-dark">
 
-        <div>
-            <h6 class="mb-1">{{ item.producto.nombre }}</h6>
-
-            <!-- PRECIO -->
-            <div>
-                {% if item.producto.descuento %}
-                    <span class="text-muted text-decoration-line-through">
-                        ${{ item.producto.precio|floatformat:0 }}
-                    </span>
+            {% with imagen=item.producto.imagenes.first %}
+                {% if imagen %}
+                    <img src="{{ imagen.imagen.url }}" 
+                         style="width:80px; height:80px; object-fit:cover; border-radius:10px;">
+                {% else %}
+                    <div style="width:80px; height:80px; background:#eee; border-radius:10px;"></div>
                 {% endif %}
-                <strong class="text-success">
-                    ${{ item.producto.precio_final|floatformat:0 }}
-                </strong>
+            {% endwith %}
+
+            <div>
+                <h6 class="mb-1">{{ item.producto.nombre }}</h6>
+
+                <!-- PRECIO -->
+                <div>
+                    {% if item.producto.descuento %}
+                        <span class="text-muted text-decoration-line-through">
+                            ${{ item.producto.precio|floatformat:0 }}
+                        </span>
+                    {% endif %}
+                    <strong class="text-success">
+                        ${{ item.producto.precio_final|floatformat:0 }}
+                    </strong>
+                </div>
             </div>
-        </div>
+
+        </a>
 
     </div>
 
     <!-- DERECHA: ACCIONES -->
     <div class="d-flex align-items-center gap-2">
 
-        <a href="{% url 'agregar_al_carrito' item.producto.id %}" 
-           class="btn btn-success btn-sm">
-            <i class="bi bi-cart"></i>
-        </a>
+        <form action="{% url 'agregar_al_carrito' item.producto.id %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm">
+                <i class="bi bi-cart"></i>
+            </button>
+        </form>
 
         <a href="{% url 'eliminar_de_wishlist' item.producto.id %}" 
            class="btn btn-outline-danger btn-sm">
             <i class="bi bi-trash"></i>
-        </a>
+        </a>                   
 
     </div>
 

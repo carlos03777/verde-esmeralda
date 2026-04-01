@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %}{{ taller.titulo }}{% endblock %}
+
+{% block content %}
+
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+<section class="page-header">
+    <div class="container text-center">
+
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'home' %}">Inicio</a>
+            <span>/</span>
+            <a href="{% url 'talleres' %}">Talleres</a>
+            <span>/</span>
+            <span class="active">{{ taller.titulo }}</span>
+        </nav>
+
+        <h1 class="page-title">{{ taller.titulo }}</h1>
+
+        <p class="page-subtitle">
+            Vive una experiencia natural única
+        </p>
+
+    </div>
+</section>
+
+
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <!-- ========================= -->
+        <!-- CONTENIDO -->
+        <!-- ========================= -->
+        <div class="col-lg-8">
+
+            <!-- IMAGEN -->
+            <img src="{{ taller.imagen.url }}" 
+                 class="img-fluid rounded mb-4 taller-img">
+
+            <!-- META -->
+            <div class="d-flex flex-wrap gap-3 text-muted small mb-3">
+
+                <span class="d-flex align-items-center gap-1">
+                    <i class="bi bi-calendar3"></i>
+                    {{ taller.fecha|date:"d M Y - H:i" }}
+                </span>
+
+                {% if taller.duracion %}
+                <span class="d-flex align-items-center gap-1">
+                    <i class="bi bi-clock"></i>
+                    {{ taller.duracion }}
+                </span>
+                {% endif %}
+
+                <span class="d-flex align-items-center gap-1">
+                    <i class="bi bi-people"></i>
+                    {{ taller.disponibles }} cupos disponibles
+                </span>
+
+            </div>
+
+            <!-- DESCRIPCIÓN -->
+            <p class="text-muted">
+                {{ taller.descripcion }}
+            </p>
+
+            <!-- CONTENIDO RICO -->
+            {% if taller.contenido %}
+            <div class="contenido-blog mt-4">
+                {{ taller.contenido|safe }}
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- SIDEBAR -->
+        <!-- ========================= -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm p-4 sticky-card">
+
+                <h5 class="fw-bold mb-3">Inscríbete</h5>
+
+               <h3 class="text-success mb-3">
+    ${{ taller.precio|floatformat:0|intcomma }} COP
+</h3>
+
+                <p class="small text-muted mb-3">
+                    Reserva tu cupo para este taller
+                </p>
+
+                <!-- FORM -->
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <input type="text" 
+                           name="nombre" 
+                           class="form-control mb-2" 
+                           placeholder="Nombre">
+
+                    <input type="email" 
+                           name="email" 
+                           class="form-control mb-2" 
+                           placeholder="Email">
+
+                    <input type="text" 
+                           name="telefono" 
+                           class="form-control mb-2" 
+                           placeholder="Teléfono (opcional)">
+
+                    <textarea name="mensaje" 
+                              class="form-control mb-3" 
+                              rows="3"
+                              placeholder="Mensaje (opcional)"></textarea>
+
+                    <button class="btn btn-success w-100 d-flex align-items-center justify-content-center gap-2">
+                        <i class="bi bi-check-circle"></i>
+                        Inscribirme
+                    </button>
+
+                </form>
+
+                <!-- DIVIDER -->
+                <hr>
+
+                <!-- WHATSAPP -->
+                <a href="https://wa.me/573203231065?text=Hola,%20quiero%20información%20sobre%20el%20taller%20{{ taller.titulo }}"
+                   target="_blank"
+                   class="btn btn-outline-success w-100 d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-whatsapp"></i>
+                    Consultar por WhatsApp
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ESTILOS -->
+<!-- ========================= -->
+<style>
+
+/* HERO */
+.page-header {
+    background: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: #6c757d;
+}
+
+/* IMAGEN */
+.taller-img {
+    max-height: 400px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* ICONOS */
+i {
+    color: #198754;
+    font-size: 14px;
+}
+
+/* CONTENIDO RICO */
+.contenido-blog img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.contenido-blog iframe {
+    width: 100%;
+    height: 400px;
+    margin: 20px 0;
+}
+
+/* SIDEBAR */
+.sticky-card {
+    position: sticky;
+    top: 100px;
+    border-radius: 12px;
+}
+
+/* BOTONES */
+.btn-success {
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    transform: scale(1.02);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .sticky-card {
+        position: static;
+    }
+}
+
+</style>
+
+{% endblock %}

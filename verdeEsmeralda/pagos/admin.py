@@ -1,28 +1,8 @@
 from django.contrib import admin
-from .models import Pagos
+from .models import Pago
 
-
-@admin.register(Pagos)
-class PagosAdmin(admin.ModelAdmin):
-
-    list_display = (
-        "orden",
-        "metodo",
-        "cantidad",
-        "estado",
-        "creado",
-    )
-
-    list_filter = (
-        "metodo",
-        "estado",
-        "creado",
-    )
-
-    search_fields = (
-        "orden__id",
-    )
-
-    ordering = ("-creado",)
-
-    readonly_fields = ("creado",)
+@admin.register(Pago)
+class PagoAdmin(admin.ModelAdmin):
+    list_display = ("id", "usuario", "orden", "monto", "estado", "creado")
+    list_filter = ("estado", "creado")
+    search_fields = ("referencia", "wompi_id")

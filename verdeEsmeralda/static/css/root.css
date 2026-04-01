@@ -48,11 +48,14 @@ body {
     color:var(--verde-principal);
 }
 
-.social-icons a{
+.social-icons a {
     margin-left:12px;
     color:var(--verde-principal);
     font-size:16px;
+    text-decoration: none !important;
 }
+
+
 
 
 
@@ -280,20 +283,19 @@ body {
 
 /* items normales */
 
-.list-group-item
 
 
 
 
 
-/*============= footer =========== */
+
 /* FOOTER */
 
 .main-footer{
-margin-top:80px;
-background:#25593B;
-color:white;
-padding:50px 0 0 0;
+    margin-top:80px;
+    background: var(--verde-profundo);
+    color:white;
+    padding:50px 0 0 0;
 }
 
 .footer-logo{
@@ -307,12 +309,16 @@ color:#d9e6df;
 }
 
 
+
+
 /* TITULOS */
 
 .footer-title{
 font-weight:600;
 margin-bottom:15px;
 }
+
+
 
 
 /* LINKS */
@@ -346,6 +352,8 @@ font-size:18px;
 }
 
 
+
+
 /* NEWSLETTER */
 
 .newsletter{
@@ -363,7 +371,7 @@ flex:1;
 
 .newsletter button{
 border:none;
-background:#1C935B;
+background:#1C935B !important;
 color:white;
 padding:10px 15px;
 }
@@ -380,12 +388,5 @@ color:#cfe3d9;
 }
 
 /*============= cierre footer =========== */
-
-
-
-
-
-
-
 
 

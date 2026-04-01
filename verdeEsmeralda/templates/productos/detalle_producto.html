@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/detalle_producto.css' %}">
+{% endblock %}
+
+{% block title %}{{ producto.nombre }} | Verde Esmeralda{% endblock %}
+
+{% block content %}
+
+<section class="product-detail">
+<div class="container">
+<div class="row g-5">
+
+<!-- GALERIA -->
+<div class="col-lg-6">
+<div class="product-gallery position-relative">
+
+<div class="main-image-wrapper">
+
+{% if imagenes %}
+<img id="mainImage" src="{{ imagenes.first.imagen.url }}" class="main-image">
+{% else %}
+<img id="mainImage" src="{% static 'img/default.png' %}" class="main-image">
+{% endif %}
+
+<!-- LUPA -->
+<div id="zoomLens" class="zoom-lens"></div>
+
+<!-- BOTONES -->
+<button type="button" class="gallery-btn prev" onclick="cambiarImagen(-1)">❮</button>
+<button type="button" class="gallery-btn next" onclick="cambiarImagen(1)">❯</button>
+
+</div>
+
+<!-- THUMBNAILS -->
+<div class="thumb-images mt-3">
+{% for img in imagenes %}
+<img 
+    src="{{ img.imagen.url }}" 
+    class="thumb-img {% if forloop.first %}active{% endif %}"
+    onclick="seleccionarImagen(this, '{{ img.imagen.url }}', {{ forloop.counter0 }})">
+{% endfor %}
+</div>
+
+</div>
+</div>
+
+<!-- INFO PRODUCTO -->
+<div class="col-lg-6">
+<div class="product-info-detail">
+
+<h2 class="product-title">{{ producto.nombre }}</h2>
+
+<div class="product-price-detail">
+{% if producto.descuento %}
+<span class="price-old">${{ producto.precio|floatformat:0 }}</span>
+{% endif %}
+<span class="price">${{ producto.precio_final|floatformat:0 }}</span>
+</div>
+
+<p class="product-short">
+{{ producto.descripcion|truncatewords:25 }}
+</p>
+
+<!-- VARIANTES -->
+<div class="product-variant">
+<h6>Tamaño</h6>
+<button type="button" class="variant-btn">Pequeña</button>
+<button type="button" class="variant-btn">Mediana</button>
+<button type="button" class="variant-btn">Grande</button>
+</div>
+
+<!-- CANTIDAD -->
+<div class="product-actions mt-4">
+
+<form method="POST" action="{% url 'agregar_al_carrito' producto.id %}">
+{% csrf_token %}
+
+<input type="hidden" name="cantidad" id="cantidadInput" value="1">
+
+<div class="d-flex align-items-center gap-3 flex-wrap">
+
+<div class="d-flex align-items-center gap-2">
+<button type="button" class="btn btn-outline-secondary btn-sm px-3" onclick="cambiarCantidad(-1)">-</button>
+
+<span id="cantidadDisplay" class="px-3 fw-bold">1</span>
+
+<button type="button" class="btn btn-outline-secondary btn-sm px-3" onclick="cambiarCantidad(1)">+</button>
+</div>
+
+{% if producto.stock > 0 %}
+<button type="submit" class="btn btn-success d-flex align-items-center gap-2 px-4">
+<i class="bi bi-cart"></i>
+Agregar al carrito
+</button>
+{% else %}
+<button class="btn btn-secondary px-4" disabled>
+Agotado
+</button>
+{% endif %}
+
+</div>
+
+</form>
+
+</div>
+
+<!-- WISHLIST (NO SE TOCA 🔥) -->
+<div class="wishlist-link mt-3">
+<a href="{% url 'agregar_a_wishlist' producto.id %}?next={{ request.path }}" 
+   class="text-decoration-none d-inline-flex align-items-center gap-2">
+    <i class="bi bi-heart"></i>
+    Añadir a favoritos
+</a>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- DESCRIPCION -->
+<section class="product-description">
+<div class="container">
+
+<h3>Descripción</h3>
+<p>{{ producto.descripcion }}</p>
+
+<h3>Especificaciones</h3>
+<ul class="product-specs">
+<li><strong>Categoría:</strong> {{ producto.categoria.nombre }}</li>
+<li><strong>Stock:</strong> {{ producto.stock }}</li>
+<li><strong>Disponible:</strong> {{ producto.disponible|yesno:"Sí,No" }}</li>
+</ul>
+
+</div>
+</section>
+
+<!-- RELACIONADOS -->
+<section class="related-products">
+<div class="container position-relative">
+
+<h3 class="section-title">Productos relacionados</h3>
+
+<button class="slider-btn left" onclick="scrollSlider(-1)">
+<i class="bi bi-chevron-left"></i>
+</button>
+
+<button class="slider-btn right" onclick="scrollSlider(1)">
+<i class="bi bi-chevron-right"></i>
+</button>
+
+<div id="relatedSlider" class="related-slider d-flex gap-4 overflow-auto pb-2">
+
+{% for p in relacionados %}
+<div class="product-card flex-shrink-0" style="width: 220px;">
+
+<div class="product-img">
+<a href="{% url 'detalle_producto' p.slug %}">
+{% if p.imagenes.first %}
+<img src="{{ p.imagenes.first.imagen.url }}">
+{% else %}
+<img src="{% static 'img/default.png' %}">
+{% endif %}
+</a>
+
+<a class="wishlist-btn" href="{% url 'agregar_a_wishlist' p.id %}?next={{ request.path }}">
+<i class="bi bi-heart"></i>
+</a>
+</div>
+
+<div class="product-info">
+<a href="{% url 'detalle_producto' p.slug %}" class="text-decoration-none text-dark">
+<h6>{{ p.nombre }}</h6>
+</a>
+
+<div class="product-price">
+{% if p.descuento %}
+<span class="price-old">${{ p.precio|floatformat:0 }}</span>
+<span class="price">${{ p.precio_final|floatformat:0 }}</span>
+{% else %}
+<span class="price">${{ p.precio|floatformat:0 }}</span>
+{% endif %}
+</div>
+
+{% if p.stock > 0 %}
+<form method="POST" action="{% url 'agregar_al_carrito' p.id %}">
+{% csrf_token %}
+<button type="submit" class="cart-btn">
+<i class="bi bi-cart"></i> Agregar
+</button>
+</form>
+{% else %}
+<button class="cart-btn" disabled>Agotado</button>
+{% endif %}
+
+</div>
+</div>
+{% empty %}
+<p>No hay productos relacionados</p>
+{% endfor %}
+
+</div>
+
+</div>
+</section>
+
+<!-- JS -->
+<script>
+
+/* ===== CANTIDAD ===== */
+let cantidad = 1;
+const stock = {{ producto.stock }};
+
+function cambiarCantidad(valor) {
+    cantidad += valor;
+    if (cantidad < 1) cantidad = 1;
+    if (cantidad > stock) cantidad = stock;
+
+    document.getElementById("cantidadDisplay").innerText = cantidad;
+    document.getElementById("cantidadInput").value = cantidad;
+}
+
+/* ===== GALERIA ===== */
+let imagenes = [
+{% for img in imagenes %}
+"{{ img.imagen.url }}",
+{% endfor %}
+];
+
+let indexActual = 0;
+
+function seleccionarImagen(el, src, index) {
+    const img = document.getElementById("mainImage");
+
+    img.style.opacity = 0;
+    setTimeout(() => {
+        img.src = src;
+        img.style.opacity = 1;
+    }, 150);
+
+    indexActual = index;
+
+    document.querySelectorAll(".thumb-img").forEach(i => i.classList.remove("active"));
+    el.classList.add("active");
+}
+
+function cambiarImagen(dir) {
+    indexActual += dir;
+
+    if (indexActual < 0) indexActual = imagenes.length - 1;
+    if (indexActual >= imagenes.length) indexActual = 0;
+
+    seleccionarImagen(
+        document.querySelectorAll(".thumb-img")[indexActual],
+        imagenes[indexActual],
+        indexActual
+    );
+}
+
+/* ===== ZOOM LUPA ===== */
+const img = document.getElementById("mainImage");
+const lens = document.getElementById("zoomLens");
+
+img.addEventListener("mousemove", moverLupa);
+img.addEventListener("mouseenter", () => lens.style.display = "block");
+img.addEventListener("mouseleave", () => lens.style.display = "none");
+
+function moverLupa(e) {
+    const rect = img.getBoundingClientRect();
+
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    lens.style.left = (x - 50) + "px";
+    lens.style.top = (y - 50) + "px";
+
+    lens.style.backgroundImage = `url(${img.src})`;
+    lens.style.backgroundSize = (img.width * 2) + "px " + (img.height * 2) + "px";
+    lens.style.backgroundPosition = `-${x*2 - 50}px -${y*2 - 50}px`;
+}
+
+/* ===== SWIPE MOBILE ===== */
+let startX = 0;
+
+img.addEventListener("touchstart", e => {
+    startX = e.touches[0].clientX;
+});
+
+img.addEventListener("touchend", e => {
+    let endX = e.changedTouches[0].clientX;
+
+    if (startX - endX > 50) cambiarImagen(1);
+    if (endX - startX > 50) cambiarImagen(-1);
+});
+
+</script>
+
+{% endblock %}

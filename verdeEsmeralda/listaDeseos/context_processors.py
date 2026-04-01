@@ -2,15 +2,21 @@ from .models import Wishlist
 
 def wishlist_contador(request):
 
+    productos_ids = set()
+
+    # SESSION
+    wishlist_session = request.session.get("wishlist", [])
+    productos_ids.update(wishlist_session)
+
+    # DB
     if request.user.is_authenticated:
         try:
             wishlist = Wishlist.objects.get(usuario=request.user)
-            total = wishlist.wishlistitem_set.count()
+            db_ids = wishlist.wishlistitem_set.values_list("producto_id", flat=True)
+            productos_ids.update(map(str, db_ids))
         except Wishlist.DoesNotExist:
-            total = 0
-    else:
-        total = 0
+            pass
 
     return {
-        "wishlist_total": total
+        "wishlist_total": len(productos_ids)
     }

@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nosotros{% endblock %}
+
+{% block content %}
+
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+<section class="page-header">
+    <div class="container text-center">
+
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'tienda' %}">Inicio</a>
+            <span>/</span>
+            <span class="active">Nosotros</span>
+        </nav>
+
+        <h1 class="page-title">
+            {{ data.titulo|default:"Sobre nosotros" }}
+        </h1>
+
+        <p class="page-subtitle">
+            {{ data.frase|default:"Conectando personas con la naturaleza 🌿" }}
+        </p>
+
+    </div>
+</section>
+
+
+<div class="container py-5">
+
+    <!-- ========================= -->
+    <!-- HISTORIA -->
+    <!-- ========================= -->
+    <div class="row align-items-center g-5 mb-5">
+
+        <div class="col-lg-6">
+            <h2 class="fw-bold mb-3">Nuestra historia</h2>
+
+            <p class="text-muted">
+                {{ data.descripcion }}
+            </p>
+
+            {% if data.historia %}
+            <p class="text-muted">
+                {{ data.historia }}
+            </p>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-6 text-center">
+            {% if data.imagen %}
+            <img src="{{ data.imagen.url }}" 
+                 class="img-fluid rounded shadow nosotros-img">
+            {% endif %}
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- FRASE -->
+    <!-- ========================= -->
+    {% if data.frase %}
+    <div class="text-center my-5">
+        <h3 class="frase-destacada">
+            “{{ data.frase }}”
+        </h3>
+    </div>
+    {% endif %}
+
+
+    <!-- ========================= -->
+    <!-- EQUIPO -->
+    <!-- ========================= -->
+    {% if equipo %}
+    <div class="mt-5">
+
+        <h2 class="text-center fw-bold mb-5">Nuestro equipo</h2>
+
+        <div class="row g-4 justify-content-center">
+
+            {% for persona in equipo %}
+            <div class="col-md-6 col-lg-3">
+
+                <div class="team-card text-center h-100">
+
+                    <!-- FOTO -->
+                    <div class="team-img-wrapper">
+                        <img src="{{ persona.foto.url }}" class="team-img">
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="mt-3">
+                        <h5 class="mb-1 fw-semibold">{{ persona.nombre }}</h5>
+
+                        <small class="text-success fw-semibold d-block mb-2">
+                            {{ persona.cargo }}
+                        </small>
+
+                        {% if persona.descripcion %}
+                        <p class="text-muted small">
+                            {{ persona.descripcion }}
+                        </p>
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </div>
+    {% endif %}
+
+
+    <!-- ========================= -->
+    <!-- CTA -->
+    <!-- ========================= -->
+    <div class="text-center mt-5 pt-4">
+        <h4 class="mb-3">Descubre lo que tenemos para ti </h4>
+
+        <a href="{% url 'tienda' %}" class="btn btn-success px-4 py-2">
+            Explorar productos
+        </a>
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ESTILOS PREMIUM -->
+<!-- ========================= -->
+<style>
+
+/* HERO */
+.page-header {
+    background: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+/* BREADCRUMB */
+.breadcrumb-nav {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb-nav a {
+    color: #198754;
+    text-decoration: none;
+}
+
+/* IMAGEN */
+.nosotros-img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+/* FRASE */
+.frase-destacada {
+    font-style: italic;
+    color: #198754;
+    font-weight: 500;
+}
+
+/* ========================= */
+/* 🔥 TEAM CARDS PREMIUM */
+/* ========================= */
+
+.team-card {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* CONTENEDOR FOTO */
+.team-img-wrapper {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+    border-radius: 50%;
+    padding: 5px;
+    background: linear-gradient(135deg, #198754, #20c997);
+}
+
+/* FOTO */
+.team-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+</style>
+
+{% endblock %}

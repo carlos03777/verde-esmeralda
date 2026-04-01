@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5 text-center">
+
+    <div class="card p-4 shadow-sm mx-auto" style="max-width: 500px;">
+        <h3 class="mb-3">Redirigiendo a pago</h3>
+        <p class="text-muted">Por favor espera...</p>
+        <div class="spinner-border text-success"></div>
+    </div>
+
+</div>
+
+<script src="https://checkout.wompi.co/widget.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    console.log("=== FRONT DEBUG ===");
+    console.log("REF:", "{{ reference }}");
+    console.log("AMOUNT:", {{ amount_in_cents }});
+    console.log("SIG:", "{{ signature }}");
+
+    const checkout = new WidgetCheckout({
+        currency: "COP",
+        amountInCents: {{ amount_in_cents }},
+        reference: "{{ reference }}",
+        publicKey: "{{ public_key }}",
+        signature: {
+            integrity: "{{ signature }}"
+        },
+        redirectUrl: "{{ redirect_url }}",
+
+        taxInCents: {
+            vat: 0,
+            consumption: 0
+        }
+    });
+
+    checkout.open(function (result) {
+
+        console.log("Resultado:", result);
+
+        // 🔥 SI HAY TRANSACCIÓN → REDIRIGIR MANUAL
+        if (result && result.transaction && result.transaction.id) {
+
+            const transactionId = result.transaction.id;
+
+            console.log("Redirigiendo con ID:", transactionId);
+
+            window.location.href = "/pagos/retorno/?id=" + transactionId;
+        }
+
+        // ⚠️ fallback por si Wompi no devuelve transaction
+        else {
+            console.log("Fallback redirect...");
+            window.location.href = "{{ redirect_url }}";
+        }
+
+    });
+
+});
+</script>
+
+{% endblock %}

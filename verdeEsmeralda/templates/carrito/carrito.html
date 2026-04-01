@@ -33,19 +33,25 @@
 <td>
 <div class="d-flex align-items-center gap-3">
 
-    {% with imagen=item.producto.imagenes.first %}
-        {% if imagen %}
-            <img src="{{ imagen.imagen.url }}" 
-                 alt="{{ item.producto.nombre }}" 
-                 style="width:70px; height:70px; object-fit:cover; border-radius:10px;">
-        {% else %}
-            <div style="width:70px; height:70px; background:#eee; border-radius:10px;"></div>
-        {% endif %}
-    {% endwith %}
+    <!-- 🔥 LINK AL DETALLE -->
+    <a href="{% url 'detalle_producto' item.producto.slug %}" 
+       class="d-flex align-items-center gap-3 text-decoration-none text-dark">
 
-    <div>
-        <strong>{{ item.producto.nombre }}</strong>
-    </div>
+        {% with imagen=item.producto.imagenes.first %}
+            {% if imagen %}
+                <img src="{{ imagen.imagen.url }}" 
+                     alt="{{ item.producto.nombre }}" 
+                     style="width:70px; height:70px; object-fit:cover; border-radius:10px;">
+            {% else %}
+                <div style="width:70px; height:70px; background:#eee; border-radius:10px;"></div>
+            {% endif %}
+        {% endwith %}
+
+        <div>
+            <strong>{{ item.producto.nombre }}</strong>
+        </div>
+
+    </a>
 
 </div>
 </td>

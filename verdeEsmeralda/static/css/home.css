@@ -1,13 +1,36 @@
 
-
-
-
-
-
-
-
-
 /*=======hero ===========*/
+
+/* HERO */
+.page-header {
+    background: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+/* BREADCRUMB */
+.breadcrumb-nav {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb-nav a {
+    color: #198754;
+    text-decoration: none;
+}
+
+
+
 /* ================= HOME TOP SECTION ================= */
 
 .home-top-section{
@@ -379,6 +402,7 @@ margin-top:5px;
 
 .home-blog{
 margin-top:70px;
+margin-bottom: 70px;
 }
 
 

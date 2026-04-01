@@ -11,5 +11,5 @@ urlpatterns = [
     path("direccion/<int:id>/editar/", views.editar_direccion, name="editar_direccion"),
     path("direccion/<int:id>/eliminar/", views.eliminar_direccion, name="eliminar_direccion"),
 
-         
+
 ]

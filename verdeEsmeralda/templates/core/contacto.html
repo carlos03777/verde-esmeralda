@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+<section class="page-header">
+    <div class="container text-center">
+
+        <nav class="breadcrumb-nav">
+            <a href="{% url 'tienda' %}">Inicio</a>
+            <span>/</span>
+            <span class="active">Contacto</span>
+        </nav>
+
+        <h1 class="page-title">Contáctanos</h1>
+
+        <p class="page-subtitle">
+            Estamos aquí para ayudarte 
+        </p>
+
+    </div>
+</section>
+
+
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <!-- ========================= -->
+        <!-- INFO -->
+        <!-- ========================= -->
+        <div class="col-lg-5">
+
+            <h3 class="fw-bold mb-3">Contactanos</h3>
+
+        {% if info %}
+
+         <p class="text-muted mb-4">
+         {{info.descripcion}}
+            </p>
+            {% else %}
+            <p class="text-muted mb-4">
+                Si tienes dudas, ideas o simplemente quieres conectar, 
+                este es el lugar.
+            </p>
+
+            {% endif %}
+
+            {% if info %}
+
+            <div class="contact-info">
+
+                {% if info.direccion %}
+                <div class="mb-3">
+                    <strong> Dirección</strong>
+                    <p class="text-muted mb-0">{{ info.direccion }}</p>
+                </div>
+                {% endif %}
+
+                {% if info.telefono %}
+                <div class="mb-3">
+                    <strong> Teléfono</strong>
+                    <p class="text-muted mb-0">{{ info.telefono }}</p>
+                </div>
+                {% endif %}
+
+                {% if info.email %}
+                <div class="mb-3">
+                    <strong> Email</strong>
+                    <p class="text-muted mb-0">{{ info.email }}</p>
+                </div>
+                {% endif %}
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FORMULARIO -->
+        <!-- ========================= -->
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm p-4">
+
+                <h4 class="mb-4">Envíanos un mensaje</h4>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- ERRORES GENERALES -->
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- NOMBRE -->
+                    <div class="mb-3">
+                        {{ form.nombre }}
+                        {% for error in form.nombre.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <!-- EMAIL -->
+                    <div class="mb-3">
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <!-- MENSAJE -->
+                    <div class="mb-3">
+                        {{ form.mensaje }}
+                        {% for error in form.mensaje.errors %}
+                            <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <!-- CAPTCHA -->
+                    <div class="mb-3">
+                        <!-- {{ form.captcha }}
+                        {% for error in form.captcha.errors %}
+                            <small class="text-danger d-block">{{ error }}</small>
+                        {% endfor %} -->
+                    </div>
+
+                    <button class="btn btn-success w-100">
+                        Enviar mensaje 
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- ESTILOS -->
+<!-- ========================= -->
+<style>
+
+/* HERO */
+.page-header {
+    background: #f8f9fa;
+    padding: 60px 0;
+    margin-bottom: 40px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    color: #6c757d;
+    margin-top: 10px;
+}
+
+.breadcrumb-nav {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.breadcrumb-nav a {
+    color: #198754;
+    text-decoration: none;
+}
+
+.breadcrumb-nav .active {
+    color: #6c757d;
+}
+
+/* CARD */
+.card {
+    border-radius: 12px;
+}
+
+/* INPUTS */
+.form-control:focus {
+    border-color: #198754;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.2);
+}
+
+/* INFO */
+.contact-info strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+</style>
+
+{% endblock %}

@@ -14,7 +14,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Configuración básica de seguridad
 # ------------------------------------------------------------
 DEBUG = True  # Cambiar a False en producción
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+     "*"
+    # "127.0.0.1",
+    # "localhost",
+    # "unstridulating-cloddily-adalberto.ngrok-free.dev"
+]
 SECRET_KEY = 'django-insecure-85%u$(k#ds9j%*51**9s@y$a1(t2un%x8taflzwf9bfyl#qcdw'
 
 # ------------------------------------------------------------
@@ -30,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',  # obligatorio para allauth
 
+    'django.contrib.humanize',
+
     #crispy form
     "crispy_forms",
     "crispy_bootstrap5",
@@ -40,14 +47,23 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',  # login con Google
 
+    #ckeditor
+    'ckeditor',
+    "ckeditor_uploader",
+
+    # "captcha",
+  
+
     # Apps propias
     'core',
     'usuarios.apps.UsuariosConfig',
     'productos',
     'ordenes',
-    'listaDeseos',
+    # 'listaDeseos',
+    'listaDeseos.apps.WishlistConfig', 
     'pagos',
-    'carrito',
+    # 'carrito',
+    'carrito.apps.CarritoConfig',
     'blog',
 ]
 
@@ -96,6 +112,8 @@ TEMPLATES = [
                 'productos.context_processors.categorias',
                 #wishlist
                 "listaDeseos.context_processors.wishlist_contador",
+#sitio
+                "core.context_processors.config_sitio",
             ],
         },
     },
@@ -140,6 +158,17 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 400,
+        "width": "100%",
+        "extraPlugins": "uploadimage,image2",
+        "removePlugins": "stylesheetparser",
+    },
+}
 # ------------------------------------------------------------
 # Configuración de Django Allauth
 # ------------------------------------------------------------
@@ -184,3 +213,35 @@ ACCOUNT_LOGOUT_ON_GET = True
 LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# ------------------------------------------------------------
+# Configuración de correo con Gmail (SMTP real)
+# ------------------------------------------------------------
+
+from decouple import config
+
+WOMPI_PUBLIC_KEY = config("WOMPI_PUBLIC_KEY").strip()
+WOMPI_PRIVATE_KEY = config("WOMPI_PRIVATE_KEY").strip()
+WOMPI_INTEGRITY_KEY = config("WOMPI_INTEGRITY_KEY").strip()
+
+# 🔐 ESTE TE FALTA
+WOMPI_EVENTS_SECRET = config("WOMPI_EVENTS_SECRET").strip()
+
+# 🔗 opcional pero recomendado
+WOMPI_REDIRECT_URL = config("WOMPI_REDIRECT_URL").strip()
+#ngrok
+CSRF_TRUSTED_ORIGINS = [
+    "https://unstridulating-cloddily-adalberto.ngrok-free.dev",
+]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+
+
+
+DEBUG = True
+
+if DEBUG:
+    RECAPTCHA_PUBLIC_KEY = "test"
+    RECAPTCHA_PRIVATE_KEY = "test"

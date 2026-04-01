@@ -1,6 +1,6 @@
 const messages = [
 
-"Conecta tu espacio con la naturaleza 🌿",
+"Conecta tu espacio con la naturaleza",
 "Kokedamas hechas a mano",
 "Transforma tu hogar con plantas vivas",
 "Talleres botánicos cada mes"

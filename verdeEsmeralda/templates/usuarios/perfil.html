@@ -134,25 +134,25 @@ Guardar cambios
 
 
 <!-- ================= ORDENES ================= -->
-
 {% if tab == "ordenes" %}
 
 <div class="card shadow-sm border-0 p-4">
 
-<h5 class="mb-3">
+<h5 class="mb-4">
 <i class="bi bi-bag-check me-2"></i>
 Tus órdenes
 </h5>
 
 {% if ordenes %}
 
-<div class="table-responsive">
+<!-- ================= DESKTOP (TABLA) ================= -->
+<div class="table-responsive d-none d-md-block">
 
-<table class="table align-middle">
+<table class="table align-middle table-hover">
 
 <thead class="table-light">
 <tr>
-<th># Orden</th>
+<th>#</th>
 <th>Total</th>
 <th>Estado</th>
 <th>Fecha</th>
@@ -164,16 +164,72 @@ Tus órdenes
 {% for orden in ordenes %}
 
 <tr>
+<td><strong>#{{ orden.id }}</strong></td>
+
+<td>${{ orden.total }}</td>
 
 <td>
+<div class="d-flex align-items-center gap-2">
+
+{% if orden.estado == "pending" %}
+<span class="badge bg-warning text-dark">Pendiente</span>
+
+<a href="{% url 'iniciar_pago' orden.id %}"
+   class="btn btn-sm btn-outline-warning">
+   Pagar ahora
+</a>
+
+{% elif orden.estado == "paid" %}
+<span class="badge bg-primary">Pagado</span>
+
+{% elif orden.estado == "shipped" %}
+<span class="badge bg-info text-dark">Enviado</span>
+
+{% elif orden.estado == "completed" %}
+<span class="badge bg-success">Completado</span>
+
+{% elif orden.estado == "cancelled" %}
+<span class="badge bg-danger">Cancelado</span>
+{% endif %}
+
+</div>
+</td>
+
+<td>{{ orden.creado|date:"d M Y" }}</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+</div>
+
+
+<!-- ================= MOBILE (CARDS) ================= -->
+<div class="d-md-none">
+
+{% for orden in ordenes %}
+
+<div class="card mb-3 border-0 shadow-sm">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between mb-2">
 <strong>#{{ orden.id }}</strong>
-</td>
+<small class="text-muted">
+{{ orden.creado|date:"d M Y" }}
+</small>
+</div>
 
-<td>
-${{ orden.total }}
-</td>
+<p class="mb-2">
+<strong>Total:</strong> ${{ orden.total }}
+</p>
 
-<td>
+<div class="d-flex justify-content-between align-items-center">
+
+<div>
 
 {% if orden.estado == "pending" %}
 <span class="badge bg-warning text-dark">Pendiente</span>
@@ -192,21 +248,43 @@ ${{ orden.total }}
 
 {% endif %}
 
-</td>
+</div>
 
-<td>
-{{ orden.creado|date:"d M Y" }}
-</td>
+{% if orden.estado == "pending" %}
+<a href="{% url 'iniciar_pago' orden.id %}"
+   class="btn btn-sm btn-warning">
+   Pagar
+</a>
+{% endif %}
 
-</tr>
+</div>
+
+</div>
+
+</div>
 
 {% endfor %}
 
-</tbody>
+</div>
 
-</table>
+
+<!-- ================= PAGINACIÓN SIMPLE ================= -->
+<div class="d-flex justify-content-center mt-4">
+
+<a href="#" class="btn btn-outline-secondary btn-sm me-2 disabled">
+Anterior
+</a>
+
+<a href="#" class="btn btn-success btn-sm">
+1
+</a>
+
+<a href="#" class="btn btn-outline-secondary btn-sm ms-2">
+Siguiente
+</a>
 
 </div>
+
 
 {% else %}
 
